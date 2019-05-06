@@ -227,6 +227,9 @@ public class Picture extends SimplePicture
     beach.explore();
     beach.zeroBlue();
     beach.explore();
+    
+     
+     DigitalPicture p = new SimplePicture();
   }
   
 } // this } is the end of class Picture, put all new methods before this
