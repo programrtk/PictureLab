@@ -1,4 +1,4 @@
-package picLab;
+package picturelab;
 
 import java.awt.*;
 import java.awt.font.*;
@@ -401,13 +401,71 @@ public class Picture extends SimplePicture
     }
   }
   
+  public void sharpen(int x, int y, int w, int h)
+  {
+      Pixel[][] pixels = this.getPixels2D();
+      Pixel currentPixel = null;
+      Pixel upperLeft = null;
+      int newRed = 0;
+      int newBlue = 0;
+      int newGreen = 0;
+      
+      for(int a = x; a < x + h; a++){
+          for(int b = y; b < y + w; b++){
+              upperLeft = pixels[a-1][b-1];
+              currentPixel = pixels[a][b];
+              
+              //colors of currentPixel
+              int currentRed = currentPixel.getRed();
+              int currentBlue = currentPixel.getBlue();
+              int currentGreen = currentPixel.getGreen();
+              
+              //half difference
+              int HalfDiffRed = ((upperLeft.getRed()-currentPixel.getRed()) / 2);
+              int HalfDiffBlue = ((upperLeft.getBlue()-currentPixel.getBlue()) / 2);
+              int HalfDiffGreen = ((upperLeft.getGreen()-currentPixel.getGreen()) / 2);
+              
+              //newRed
+              if(((currentRed + HalfDiffRed)) >= 0 && ((currentRed + HalfDiffRed))  <= 255)
+              {
+                  newRed = ((currentRed + HalfDiffRed));
+              }else{
+                  newRed = currentPixel.getRed();
+              }
+              
+              //newBlue
+              if(((currentBlue + HalfDiffBlue)) >= 0 && ((currentBlue + HalfDiffBlue))  <= 255)
+              {
+                  newBlue = ((currentBlue + HalfDiffBlue));
+              }else{
+                  newBlue = currentPixel.getBlue();
+              }
+              
+              //newGreen
+              if(((currentGreen + HalfDiffGreen)) >= 0 && ((currentGreen + HalfDiffGreen))  <= 255)
+              {
+                  newGreen = ((currentGreen + HalfDiffGreen));
+              }else{
+                  newGreen = currentPixel.getGreen();
+              }
+              
+              
+              currentPixel.setRed(newRed);
+              currentPixel.setGreen(newGreen);
+              currentPixel.setBlue(newBlue);
+              
+          }
+      }
+      
+  }
+  
   
   /* Main method for testing - each class in Java can have a main 
    * method 
    */
   public static void main(String[] args) 
   {
-    Picture beach = new Picture("beach.jpg");
+    Picture beach = new Picture("moon-surface.jpg");
     beach.explore();
     beach.zeroBlue();
     beach.explore();
